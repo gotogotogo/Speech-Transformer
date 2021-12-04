@@ -22,10 +22,11 @@ def get_data(split, n_samples):
 
     tran_dict = dict()
     for line in lines:
+        line = line.strip()
         tokens = line.split()
         key = tokens[0]
-        trn = ''.join(tokens[1:])
-        tran_dict[key] = trn
+        tran = ''.join(tokens[1:])
+        tran_dict[key] = tran
 
     samples = []
 
@@ -47,15 +48,15 @@ def get_data(split, n_samples):
             key = f.split('.')[0]
 
             if key in tran_dict:
-                trn = tran_dict[key]
-                trn = list(trn.strip()) + ['<eos>']
+                tran = tran_dict[key]
+                tran = list(tran.strip()) + ['<eos>']
 
-                for token in trn:
+                for token in tran:
                     build_vocab(token)
 
-                trn = [VOCAB[token] for token in trn]
+                label = [VOCAB[token] for token in tran]
 
-                samples.append({'trn': trn, 'wave': wave})
+                samples.append({'wave': wave, 'label': label})
         
         rest = rest - len(files) if n_samples > 0 else rest
         if rest <= 0 :
@@ -67,7 +68,7 @@ def get_data(split, n_samples):
 
 def build_vocab(token):
     global VOCAB, IVOCAB
-    if not token in VOCAB:
+    if token not in VOCAB:
         next_index = len(VOCAB)
         VOCAB[token] = next_index
         IVOCAB[next_index] = token
