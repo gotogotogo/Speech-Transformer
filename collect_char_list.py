@@ -3,7 +3,7 @@ import pickle
 from config import pickle_file
 
 if __name__ == '__main__':
-    with open('vocab_' + pickle_file, 'rb') as file:
+    with open(pickle_file + '_vocab.pkl', 'rb') as file:
         data = pickle.load(file)
     char_list = data['IVOCAB']
 

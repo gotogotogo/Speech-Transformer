@@ -91,7 +91,7 @@ def spec_augment(spec: np.ndarray,
 class AiShellDataset(Dataset):
     def __init__(self, args, split):
         self.args = args
-        with open(split + '_' + pickle_file, 'rb') as file:
+        with open(pickle_file + '_' + split + '.pkl', 'rb') as file:
             data = pickle.load(file)
 
         self.samples = data[split]

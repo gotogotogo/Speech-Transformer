@@ -92,25 +92,24 @@ if __name__ == "__main__":
     data = dict()
     data['VOCAB'] = VOCAB
     data['IVOCAB'] = IVOCAB
-    with open('vocab_' + pickle_file, 'wb') as file:
+    with open(pickle_file + '_vocab.pkl', 'wb') as file:
         pickle.dump(data, file)
+    print('vocab_size: ' + str(len(data['VOCAB'])))
     
     data = dict()
     data['train'] = get_data('train', args.n_samples["train"])
-    with open('train_' + pickle_file, 'wb') as file:
+    with open(pickle_file + '_train.pkl', 'wb') as file:
         pickle.dump(data, file)
+    print('num_train: ' + str(len(data['train'])))
 
     data = dict()
     data['dev'] = get_data('dev', args.n_samples["dev"])
-    with open('dev_' + pickle_file, 'wb') as file:
+    with open(pickle_file + '_dev.pkl', 'wb') as file:
         pickle.dump(data, file)
+    print('num_dev: ' + str(len(data['dev'])))
 
     data = dict()
     data['test'] = get_data('test', args.n_samples["test"])
-    with open('test_' + pickle_file, 'wb') as file:
+    with open(pickle_file + '_test.pkl', 'wb') as file:
         pickle.dump(data, file)
-
-    print('num_train: ' + str(len(data['train'])))
-    print('num_dev: ' + str(len(data['dev'])))
     print('num_test: ' + str(len(data['test'])))
-    print('vocab_size: ' + str(len(data['VOCAB'])))
