@@ -92,11 +92,22 @@ if __name__ == "__main__":
     data = dict()
     data['VOCAB'] = VOCAB
     data['IVOCAB'] = IVOCAB
-    data['train'] = get_data('train', args.n_samples["train"])
-    data['dev'] = get_data('dev', args.n_samples["dev"])
-    data['test'] = get_data('test', args.n_samples["test"])
+    with open('vocab_' + pickle_file, 'wb') as file:
+        pickle.dump(data, file)
     
-    with open(pickle_file, 'wb') as file:
+    data = dict()
+    data['train'] = get_data('train', args.n_samples["train"])
+    with open('train_' + pickle_file, 'wb') as file:
+        pickle.dump(data, file)
+
+    data = dict()
+    data['dev'] = get_data('dev', args.n_samples["dev"])
+    with open('dev_' + pickle_file, 'wb') as file:
+        pickle.dump(data, file)
+
+    data = dict()
+    data['test'] = get_data('test', args.n_samples["test"])
+    with open('test_' + pickle_file, 'wb') as file:
         pickle.dump(data, file)
 
     print('num_train: ' + str(len(data['train'])))
