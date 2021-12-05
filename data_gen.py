@@ -95,6 +95,7 @@ class AiShellDataset(Dataset):
             data = pickle.load(file)
 
         self.samples = data[split]
+        del data
         print('loading {} {} samples...'.format(len(self.samples), split))
 
     def __getitem__(self, i):
