@@ -12,6 +12,7 @@ from config import wav_folder, tran_file, pickle_file
 from utils import ensure_folder, parse_args
 from config import sample_rate
 import librosa
+from utils import extract_feature
 
 def get_data(split, n_samples):
     print('getting {} data...'.format(split))
@@ -57,7 +58,9 @@ def get_data(split, n_samples):
 
                 label = [VOCAB[token] for token in tran]
                 wave, _ = librosa.load(wave, sr=sample_rate)
-                samples.append({'wave': wave, 'label': label})
+                feature = extract_feature(wave=wave, feature='fbank', dim=args.d_input, cmvn=True)
+                feature = (feature - feature.mean()) / feature.std()
+                samples.append({'wave': feature, 'label': label})
         
         rest = rest - len(files) if n_samples > 0 else rest
         if rest <= 0 :

@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 from torch.utils.data.dataloader import default_collate
 
 from config import pickle_file, IGNORE_ID
-from utils import extract_feature
+# from utils import extract_feature
 
 
 def pad_collate(batch):
@@ -100,12 +100,12 @@ class AiShellDataset(Dataset):
 
     def __getitem__(self, i):
         sample = self.samples[i]
-        wave = sample['wave']
+        feature = sample['wave']
         trn = sample['label']
 
-        feature = extract_feature(wave=wave, feature='fbank', dim=self.args.d_input, cmvn=True)
+        # feature = extract_feature(wave=wave, feature='fbank', dim=self.args.d_input, cmvn=True)
         # zero mean and unit variance
-        feature = (feature - feature.mean()) / feature.std()
+        # feature = (feature - feature.mean()) / feature.std()
         feature = spec_augment(feature)
         feature = build_LFR_features(feature, m=self.args.LFR_m, n=self.args.LFR_n)
 
