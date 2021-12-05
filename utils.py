@@ -186,7 +186,7 @@ def normalize(yt):
 
 # Acoustic Feature Extraction
 # Parameters
-#     - input file  : str, audio file path
+#     - wave        : floating point time series loaded from an audio file
 #     - feature     : str, fbank or mfcc
 #     - dim         : int, dimension of feature
 #     - cmvn        : bool, apply CMVN on feature
@@ -195,10 +195,11 @@ def normalize(yt):
 #     - save_feature: str, if given, store feature to the path and return len(feature)
 # Return
 #     acoustic features with shape (time step, dim)
-def extract_feature(input_file, feature='fbank', dim=80, cmvn=True, delta=False, delta_delta=False,
+def extract_feature(wave, feature='fbank', dim=80, cmvn=True, delta=False, delta_delta=False,
                     window_size=25, stride=10, save_feature=None):
-    y, sr = librosa.load(input_file, sr=sample_rate)
-    yt, _ = librosa.effects.trim(y, top_db=20)
+    # y, sr = librosa.load(input_file, sr=sample_rate)
+    sr = sample_rate
+    yt, _ = librosa.effects.trim(wave, top_db=20)
     yt = normalize(yt)
     ws = int(sr * 0.001 * window_size)
     st = int(sr * 0.001 * stride)

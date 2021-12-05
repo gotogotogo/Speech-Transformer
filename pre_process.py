@@ -10,7 +10,8 @@ from tqdm import tqdm
 
 from config import wav_folder, tran_file, pickle_file
 from utils import ensure_folder, parse_args
-
+from config import sample_rate
+import librosa
 
 def get_data(split, n_samples):
     print('getting {} data...'.format(split))
@@ -55,7 +56,7 @@ def get_data(split, n_samples):
                     build_vocab(token)
 
                 label = [VOCAB[token] for token in tran]
-
+                wave, _ = librosa.load(wave, sr=sample_rate)
                 samples.append({'wave': wave, 'label': label})
         
         rest = rest - len(files) if n_samples > 0 else rest

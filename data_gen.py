@@ -100,9 +100,9 @@ class AiShellDataset(Dataset):
     def __getitem__(self, i):
         sample = self.samples[i]
         wave = sample['wave']
-        trn = sample['trn']
+        trn = sample['label']
 
-        feature = extract_feature(input_file=wave, feature='fbank', dim=self.args.d_input, cmvn=True)
+        feature = extract_feature(wave=wave, feature='fbank', dim=self.args.d_input, cmvn=True)
         # zero mean and unit variance
         feature = (feature - feature.mean()) / feature.std()
         feature = spec_augment(feature)
