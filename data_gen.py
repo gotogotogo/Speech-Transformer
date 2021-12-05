@@ -92,10 +92,10 @@ class AiShellDataset(Dataset):
     def __init__(self, args, split):
         self.args = args
         with open(pickle_file + '_' + split + '.pkl', 'rb') as file:
-            data = pickle.load(file)
+            # data = pickle.load(file)
+            self.samples = pickle.load(file)
 
-        self.samples = data[split]
-        del data
+        # self.samples = data[split]
         print('loading {} {} samples...'.format(len(self.samples), split))
 
     def __getitem__(self, i):
