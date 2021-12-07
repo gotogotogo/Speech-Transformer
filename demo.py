@@ -31,9 +31,9 @@ if __name__ == '__main__':
     args = parse_args()
     with open('char_list.pkl', 'rb') as file:
         char_list = pickle.load(file)
-    with open(pickle_file, 'rb') as file:
-        data = pickle.load(file)
-    samples = data['test']
+    with open(pickle_file + '_test.pkl', 'rb') as file:
+        samples = pickle.load(file)
+    # samples = data['test']
 
     filename = 'speech-transformer-cn.pt'
     print('loading model: {}...'.format(filename))
@@ -47,12 +47,12 @@ if __name__ == '__main__':
     results = []
 
     for i, sample in enumerate(samples):
-        wave = sample['wave']
-        trn = sample['trn']
+        feature = sample['wave']
+        trn = sample['label']
 
-        copyfile(wave, 'audios/audio_{}.wav'.format(i))
+        # copyfile(wave, 'audios/audio_{}.wav'.format(i))
 
-        feature = extract_feature(input_file=wave, feature='fbank', dim=input_dim, cmvn=True)
+        # feature = extract_feature(input_file=wave, feature='fbank', dim=input_dim, cmvn=True)
         feature = build_LFR_features(feature, m=LFR_m, n=LFR_n)
         # feature = np.expand_dims(feature, axis=0)
         input = torch.from_numpy(feature).to(device)
