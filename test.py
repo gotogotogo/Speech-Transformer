@@ -28,10 +28,11 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
-    with open(pickle_file, 'rb') as file:
+    with open(pickle_file + '_test.pkl', 'rb') as file:
+        samples = pickle.load(file)
+    with open(pickle + '_vocab.pkl', 'rb') as file:
         data = pickle.load(file)
     char_list = data['IVOCAB']
-    samples = data['test']
 
     checkpoint = 'BEST_checkpoint.tar'
     checkpoint = torch.load(checkpoint, map_location='cpu')
@@ -44,10 +45,10 @@ if __name__ == '__main__':
 
     for i in tqdm(range(num_samples)):
         sample = samples[i]
-        wave = sample['wave']
-        trn = sample['trn']
+        feature = sample['wave']
+        trn = sample['label']
 
-        feature = extract_feature(input_file=wave, feature='fbank', dim=input_dim, cmvn=True)
+        # feature = extract_feature(input_file=wave, feature='fbank', dim=input_dim, cmvn=True)
         feature = build_LFR_features(feature, m=LFR_m, n=LFR_n)
         # feature = np.expand_dims(feature, axis=0)
         input = torch.from_numpy(feature).to(device)
