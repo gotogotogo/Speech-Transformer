@@ -4,6 +4,7 @@ import random
 from shutil import copyfile
 
 import torch
+import json
 
 from config import pickle_file, device, input_dim, LFR_m, LFR_n
 from data_gen import build_LFR_features
@@ -73,7 +74,6 @@ if __name__ == '__main__':
 
         results.append({'out_list_{}'.format(i): out_list, 'gt_{}'.format(i): gt})
 
-    import json
 
     with open('results.json', 'w') as file:
         json.dump(results, file, indent=4, ensure_ascii=False)
