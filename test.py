@@ -30,7 +30,7 @@ if __name__ == '__main__':
     args = parse_args()
     with open(pickle_file + '_test.pkl', 'rb') as file:
         samples = pickle.load(file)
-    with open(pickle + '_vocab.pkl', 'rb') as file:
+    with open(pickle_file + '_vocab.pkl', 'rb') as file:
         data = pickle.load(file)
     char_list = data['IVOCAB']
 
